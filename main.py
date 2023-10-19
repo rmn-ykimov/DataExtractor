@@ -1,35 +1,18 @@
 import os
-import pandas as pd
-
-from docx import Document
-
-
-def extract_table_data(docx_path):
-    document = Document(docx_path)
-
-    table_data = []
-
-    for table in document.tables:
-        for row in table.rows:
-            row_data = []
-            for cell in row.cells:
-                row_data.append(cell.text.strip())
-            table_data.append(row_data)
-
-    return table_data
+from table_extractor import extract_table_data
+from file_saver import save_data_to_excel
 
 
-current_dir = os.getcwd()
+def main():
+    current_dir = os.getcwd()
+    docx_path = os.path.join(current_dir, "input.docx")
+    extracted_data = extract_table_data(docx_path)
 
-docx_path = os.path.join(current_dir, "input.docx")
+    output_excel_path = os.path.join(current_dir, "output.xlsx")
+    save_data_to_excel(extracted_data, output_excel_path)
 
-extracted_data = extract_table_data(docx_path)
+    print(f"Path for excel file is {output_excel_path}")
 
-print(extracted_data)
 
-df = pd.DataFrame(extracted_data[1:], columns=extracted_data[0])
-
-output_excel_path = os.path.join(current_dir, "output.xlsx")
-df.to_excel(output_excel_path, index=False)
-
-print(output_excel_path)
+if __name__ == "__main__":
+    main()
