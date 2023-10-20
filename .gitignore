@@ -161,3 +161,7 @@ cython_debug/
 .DS_Store
 input.docx
 output.xlsx
+input/*
+!input/.gitkeep
+output/*
+!output/.gitkeep
