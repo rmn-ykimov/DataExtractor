@@ -6,7 +6,8 @@ def process_text(text):
 
 
 def is_section_year_row(row):
-    return any("г." in cell_content for cell_content in row)
+    non_empty_cells = sum(1 for cell in row if cell)
+    return non_empty_cells == 1 and any("г." in cell_content for cell_content in row)
 
 
 def extract_table_data(docx_path):
@@ -21,8 +22,7 @@ def extract_table_data(docx_path):
 
             if is_section_year_row(row_data):
                 current_section_year = next(
-                    (cell_content for cell_content in row_data if
-                     "г." in cell_content), None)
+                    (cell for cell in row_data if cell), None)
                 continue
 
             if not headers_added:
