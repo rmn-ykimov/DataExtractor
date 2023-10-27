@@ -23,16 +23,22 @@ def extract_table_data(docx_path):
     headers_added = False
 
     for table in document.tables:
+        current_table_data = []
+
         for row in table.rows:
             row_data = [process_text(cell.text.strip()) for cell in row.cells]
 
             if is_section_year_row(row_data):
-                current_section_year = next((cell for cell in row_data if cell), None)
+                current_section_year = next(
+                    (cell for cell in row_data if cell), None)
                 continue
 
-            row_data.append("Год (Раздел)" if not headers_added else current_section_year)
+            row_data.append(
+                "Год (Раздел)" if not headers_added else current_section_year)
             headers_added = True
 
-            table_data.append(row_data)
+            current_table_data.append(row_data)
+
+        table_data.extend(current_table_data)
 
     return table_data
