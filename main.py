@@ -3,19 +3,36 @@ from table_extractor import extract_table_data
 from file_saver import save_data_to_excel
 
 
+# Function to process a single DOCX file and save its tables to an Excel file
 def process_file(docx_path):
+
+    # Extract tables from the DOCX file
     extracted_data = extract_table_data(docx_path)
+
+    # Create the name for the output Excel file based on the DOCX file name
     base_name = os.path.basename(docx_path).replace('.docx', '.xlsx')
+
+    # Determine the full path for the output Excel file
     output_excel_path = os.path.join(os.getcwd(), 'output', base_name)
+
+    # Save the extracted data to an Excel file
     save_data_to_excel(extracted_data, output_excel_path)
+
+    # Print the path where the Excel file has been saved
     print(f"Path for excel file is {output_excel_path}")
 
 
+# Main function to process all DOCX files in the 'input' directory
 def main():
+
+    # Determine the 'input' directory path
     input_dir = os.path.join(os.getcwd(), 'input')
+
+    # Create the 'output' directory if it doesn't exist
     if not os.path.exists('output'):
         os.makedirs('output')
 
+    # Loop through all files in the 'input' directory
     for root, dirs, files in os.walk(input_dir):
         for file in files:
             if file.endswith('.docx'):
@@ -23,5 +40,6 @@ def main():
                 process_file(docx_path)
 
 
+# Entry point of the script
 if __name__ == "__main__":
     main()

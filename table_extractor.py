@@ -1,10 +1,13 @@
 from docx import Document
 
 
+# Function to process text in a cell
+# Removes line breaks and replaces them with spaces
 def process_text(text):
     return text.replace('-\n', '').replace('\n', ' ')
 
 
+# Checks whether the given row is a row with a year (or section)
 def is_section_year_row(row):
     non_empty_cells = 0
     contains_year = False
@@ -16,29 +19,42 @@ def is_section_year_row(row):
     return non_empty_cells == 1 and contains_year
 
 
+# Function to extract data from tables in a DOCX file
 def extract_table_data(docx_path):
+
+    # Open the DOCX file
     document = Document(docx_path)
-    table_data = []
-    current_section_year = None
-    headers_added = False
 
+    # Initialize variables
+    table_data = [] # Data for all tables
+    current_section_year = None # Current year or section
+    headers_added = False # Flag for adding the "Год (Раздел)" header
+
+    # Iterate through all tables in the document
     for table in document.tables:
-        current_table_data = []
+        current_table_data = [] # Data for the current table
 
+        # Iterate through all rows in the table
         for row in table.rows:
+            # Process each cell in the row
             row_data = [process_text(cell.text.strip()) for cell in row.cells]
 
+            # Check for a row with a year (or section)
             if is_section_year_row(row_data):
                 current_section_year = next(
                     (cell for cell in row_data if cell), None)
                 continue
 
+            # Add the year (or section) to the row
             row_data.append(
                 "Год (Раздел)" if not headers_added else current_section_year)
             headers_added = True
 
+            # Save the processed row
             current_table_data.append(row_data)
 
+        # Add the data for the current table to the overall list
         table_data.extend(current_table_data)
 
+    # Return the data for all tables
     return table_data
