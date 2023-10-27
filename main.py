@@ -1,25 +1,7 @@
 import os
-from table_extractor import extract_table_data
-from file_saver import save_data_to_excel
-
-
-# Function to process a single DOCX file and save its tables to an Excel file
-def process_file(docx_path):
-
-    # Extract tables from the DOCX file
-    extracted_data = extract_table_data(docx_path)
-
-    # Create the name for the output Excel file based on the DOCX file name
-    base_name = os.path.basename(docx_path).replace('.docx', '.xlsx')
-
-    # Determine the full path for the output Excel file
-    output_excel_path = os.path.join(os.getcwd(), 'output', base_name)
-
-    # Save the extracted data to an Excel file
-    save_data_to_excel(extracted_data, output_excel_path)
-
-    # Print the path where the Excel file has been saved
-    print(f"Path for excel file is {output_excel_path}")
+from file_processor import process_file
+from file_utils import (create_directory_if_not_exists,
+                        get_all_docx_files_in_directory)
 
 
 # Main function to process all DOCX files in the 'input' directory
@@ -29,15 +11,14 @@ def main():
     input_dir = os.path.join(os.getcwd(), 'input')
 
     # Create the 'output' directory if it doesn't exist
-    if not os.path.exists('output'):
-        os.makedirs('output')
+    create_directory_if_not_exists(
+        'output')
 
     # Loop through all files in the 'input' directory
-    for root, dirs, files in os.walk(input_dir):
-        for file in files:
-            if file.endswith('.docx'):
-                docx_path = os.path.join(root, file)
-                process_file(docx_path)
+    docx_files = get_all_docx_files_in_directory(
+        input_dir)
+    for docx_path in docx_files:
+        process_file(docx_path)
 
 
 # Entry point of the script
