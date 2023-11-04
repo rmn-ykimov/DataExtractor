@@ -1,6 +1,6 @@
 import os
-from table_extractor import extract_table_data
-from file_saver import save_data_to_excel
+from logic.table_extractor import extract_table_data
+from logic.file_saver import save_data_to_excel
 
 
 # Function to process a single DOCX file and save its tables to an Excel file

@@ -1,5 +1,5 @@
 import pandas as pd
-from config import unwanted_values
+from configs.config import unwanted_values
 
 
 def save_data_to_excel(data, excel_path):

@@ -1,7 +1,7 @@
 import os
-from file_processor import process_file
-from file_utils import (create_directory_if_not_exists,
-                        get_all_docx_files_in_directory)
+from logic.file_processor import process_file
+from utils.file_utils import (create_directory_if_not_exists,
+                              get_all_docx_files_in_directory)
 
 
 # Main function to process all DOCX files in the 'input' directory
