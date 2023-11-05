@@ -1,27 +1,26 @@
 import os
-from table_extractor import extract_table_data
-from file_saver import save_data_to_excel
+from logic.file_processor import process_file
+from utils.file_utils import (create_directory_if_not_exists,
+                              get_all_docx_files_in_directory)
 
 
-def process_file(docx_path):
-    extracted_data = extract_table_data(docx_path)
-    base_name = os.path.basename(docx_path).replace('.docx', '.xlsx')
-    output_excel_path = os.path.join(os.getcwd(), 'output', base_name)
-    save_data_to_excel(extracted_data, output_excel_path)
-    print(f"Path for excel file is {output_excel_path}")
-
-
+# Main function to process all DOCX files in the 'input' directory
 def main():
+
+    # Determine the 'input' directory path
     input_dir = os.path.join(os.getcwd(), 'input')
-    if not os.path.exists('output'):
-        os.makedirs('output')
 
-    for root, dirs, files in os.walk(input_dir):
-        for file in files:
-            if file.endswith('.docx'):
-                docx_path = os.path.join(root, file)
-                process_file(docx_path)
+    # Create the 'output' directory if it doesn't exist
+    create_directory_if_not_exists(
+        'output')
+
+    # Loop through all files in the 'input' directory
+    docx_files = get_all_docx_files_in_directory(
+        input_dir)
+    for docx_path in docx_files:
+        process_file(docx_path)
 
 
+# Entry point of the script
 if __name__ == "__main__":
     main()

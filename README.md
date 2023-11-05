@@ -19,11 +19,12 @@ save it in Excel (**XLSX**) format.
 
 ## Usage
 
-- Place the input.docx file you wish to extract a table from in the same
-  directory as the script.
-- Run the script with the command python main.py.
-- Upon successful execution of the script, an output.xlsx file will be created
-  in the same directory.
+- Place .docx files you wish to extract a table from in the DataExtractor/input
+  directory.
+- Run the script with the command python3 main.py (or python main.py if you 
+  on Windows os).
+- Upon successful execution of the script, .xlsx files with same names will be 
+  created in the DataExtractor/output directory.
 
 ---
 
@@ -62,11 +63,12 @@ RU
 
 ## Использование
 
-- Поместите файл input.docx, из которого вы хотите извлечь таблицу, в ту же
-  директорию, что и скрипт.
-- Запустите скрипт командой `python main.py`.
-- После успешного выполнения скрипта, файл output.xlsx будет создан в той же
-  директории.
+- Поместите .docx файлы, из которых вы хотите извлечь таблицу, в директорию
+  DataExtractor/input.
+- Запустите скрипт с помощью команды python3 main.py (или python main.py,
+  если вы используете операционную систему Windows).
+- После успешного выполнения скрипта в директории DataExtractor/output 
+  будут созданы .xlsx файлы с теми же именами.
 
 ---
 
