@@ -1,3 +1,4 @@
+import re
 from docx import Document
 
 
@@ -28,13 +29,17 @@ def is_section_year_row(row):
     bool
         True if the row contains only one non-empty cell with a year, otherwise False.
     """
-    non_empty_cells = 0
-    contains_year = False
-    for cell in row:
-        if cell:
-            non_empty_cells += 1
-            if "г." in cell:
-                contains_year = True
+
+    # Count the number of non-empty cells in the row
+    non_empty_cells = sum(1 for cell in row if cell.strip())
+
+    # Compile a regular expression to search for a year pattern in the cell
+    year_regex = re.compile(r'^\s*(\d{4})(\s+год|\s+г\.|\s*года)?\s*$')
+
+    # Check if at least one cell in the row contains a year matching the regular expression
+    contains_year = any(year_regex.match(cell) for cell in row)
+
+    # Return True if exactly one cell is non-empty and contains a year
     return non_empty_cells == 1 and contains_year
 
 
