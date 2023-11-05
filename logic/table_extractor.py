@@ -1,14 +1,33 @@
 from docx import Document
 
 
-# Function to process text in a cell
-# Removes line breaks and replaces them with spaces
 def process_text(text):
+    """
+    Process text in a cell, removing line breaks and replacing them with spaces.
+
+    Parameters:
+    text : str
+        The text to be processed.
+
+    Returns:
+    str
+        The processed text.
+    """
     return text.replace('-\n', '').replace('\n', ' ')
 
 
-# Checks whether the given row is a row with a year (or section)
 def is_section_year_row(row):
+    """
+    Check whether the given row is a row with a year (or section).
+
+    Parameters:
+    row : list of str
+        The list of cells in a row.
+
+    Returns:
+    bool
+        True if the row contains only one non-empty cell with a year, otherwise False.
+    """
     non_empty_cells = 0
     contains_year = False
     for cell in row:
@@ -19,20 +38,30 @@ def is_section_year_row(row):
     return non_empty_cells == 1 and contains_year
 
 
-# Function to extract data from tables in a DOCX file
 def extract_table_data(docx_path):
+    """
+    Extract data from tables in a DOCX file.
+
+    Parameters:
+    docx_path : str
+        The path to the DOCX file to be processed.
+
+    Returns:
+    list of lists of str
+        The data from all tables in the file.
+    """
 
     # Open the DOCX file
     document = Document(docx_path)
 
     # Initialize variables
-    table_data = [] # Data for all tables
-    current_section_year = None # Current year or section
-    headers_added = False # Flag for adding the "Год (Раздел)" header
+    table_data = []  # Data for all tables
+    current_section_year = None  # Current year or section
+    headers_added = False  # Flag for adding the "Год (Раздел)" header
 
     # Iterate through all tables in the document
     for table in document.tables:
-        current_table_data = [] # Data for the current table
+        current_table_data = []  # Data for the current table
 
         # Iterate through all rows in the table
         for row in table.rows:

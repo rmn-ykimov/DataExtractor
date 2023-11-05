@@ -5,6 +5,16 @@ from logic.file_saver import save_data_to_excel
 
 # Function to process a single DOCX file and save its tables to an Excel file
 def process_file(docx_path):
+    """
+    Process a single DOCX file and save its tables to an Excel file.
+
+    Parameters:
+    docx_path : str
+        The path to the DOCX file to be processed.
+
+    Returns:
+    None. The function's output is the creation of an Excel file.
+    """
     # Extract tables from the DOCX file
     extracted_data = extract_table_data(docx_path)
 
