@@ -33,7 +33,9 @@ def is_section_year_row(row):
     non_empty_cells = sum(1 for cell in row if cell.strip())
 
     # Compile a regular expression to search for a year pattern in the cell
-    year_regex = re.compile(r'^\s*(\d{4})(-\d{4})?(\s+год|\s+г\.|\s*года)?\s*$')
+    year_regex = re.compile(
+        r'^\s*(\d{4})(-\d{4})?(\s+год|\s+г\.|\s*года)?\s*$'
+    )
 
     # Check if at least one cell in the row contains a year matching the
     # regular expression
@@ -41,6 +43,33 @@ def is_section_year_row(row):
 
     # Return True if exactly one cell is non-empty and contains a year
     return non_empty_cells == 1 and contains_year
+
+
+def is_section_text_row(row):
+    """
+    Check whether the given row is a section row with text only (no digits).
+
+    Parameters:
+    row : list of str
+        The list of cells in a row.
+
+    Returns: bool
+        True if the row contains only one non-empty cell with text (no digits),
+        otherwise False.
+    """
+
+    # Count the number of non-empty cells in the row
+    non_empty_cells = sum(1 for cell in row if cell.strip())
+
+    # Compile a regular expression to check for the presence of digits
+    digit_regex = re.compile(r'\d')
+
+    # Check if at least one cell in the row contains only text without digits
+    contains_only_text = any(not digit_regex.search(cell) for cell in row)
+
+    # Return True if exactly one cell is non-empty and contains only text
+    # without digits
+    return non_empty_cells == 1 and contains_only_text
 
 
 def extract_table_data(docx_path):
